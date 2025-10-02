@@ -1,0 +1,92 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quran Hasanat Calculator</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Quran Hasanat Calculator</h1>
+    <h2>Calculate your rewards for reciting the Holy Quran</h2>
+
+    <div class="select-group">
+      <div class="group">
+        <select id="startSurah">
+          <option value="">Start Surah</option>
+        </select>
+        <input type="number" id="startAyah" placeholder="Start Ayah">
+      </div>
+      <div class="group">
+        <select id="endSurah">
+          <option value="">End Surah</option>
+        </select>
+        <input type="number" id="endAyah" placeholder="End Ayah">
+      </div>
+    </div>
+
+    <button onclick="calculateHasanat()">Calculate My Hasanat</button>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="result-card"></div>
+    <div class="affiliate">
+      <p>
+        Want to Understand What You Recited? Learn Arabic on
+        <a href="https://portal.pathtoarabic.com/member/aff/go/lfaizaanl" target="_blank" rel="noopener noreferrer">
+          Path to Arabic
+        </a>
+      </p>
+    </div>    
+
+    <div id="suggest-feature" style="text-align: center; margin-top: 20px;">
+      <p id="suggest-text" style="cursor: pointer; color: blue;" onclick="showSuggestionInput()">Suggest a Feature</p>
+      <div id="suggestion-form" style="display: none;">
+        <input type="text" id="suggestion-input" placeholder="Type your suggestion here" style="width: 300px; padding: 5px;">
+        <button onclick="submitSuggestion()">Submit</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Add a comment to indicate hosting instructions -->
+  <!-- To host the frontend, use a simple HTTP server like Python's built-in server -->
+
+  <script src="/static/App.js"></script>
+  <script>
+    function showSuggestionInput() {
+      document.getElementById('suggestion-form').style.display = 'block';
+      document.getElementById('suggest-text').style.display = 'none';
+    }
+
+    async function submitSuggestion() {
+      const suggestion = document.getElementById('suggestion-input').value;
+      if (suggestion.trim() === '') {
+        alert('Please enter a suggestion.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/suggestions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ suggestion })
+        });
+
+        if (response.ok) {
+          alert('Thank you for your suggestion!');
+          document.getElementById('suggestion-input').value = '';
+          document.getElementById('suggestion-form').style.display = 'none';
+          document.getElementById('suggest-text').style.display = 'block';
+        } else {
+          alert('Failed to submit suggestion. Please try again.');
+        }
+      } catch (error) {
+        alert('An error occurred. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# Quran Hasanat Calculator(https://guided-mostly-serval.ngrok-free.app)
+# [Quran Hasanat Calculator](https://guided-mostly-serval.ngrok-free.app)
 
 A FastAPI-based backend for calculating hasanat (rewards) from Quran ayahs, tracking visitor counts, and collecting user suggestions. Includes a simple frontend served as static files.
 
